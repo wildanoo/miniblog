@@ -108,6 +108,12 @@
                             <li class="list-group-item">
                                 <a href="{{ route('post.trashed') }}">All Trashed Posts</a>
                             </li>
+                            @if(Auth::user()->name)
+                                <li class="list-group-item">
+                                    <a href="{{ route('settings') }}">Settings</a>
+                                </li>
+                            @endif
+                            
                         </ul>
                     </div>
                 @endif
