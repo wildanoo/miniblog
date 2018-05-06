@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label for="password">New Password</label>
-                <input type="email" name="password" class="form-control" value="">
+                <input type="text" name="password" class="form-control" value="">
             </div>
             <div class="form-group">
                 <label for="avatar">Upload new avatar</label>
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <div class="text-center">
                     <button class="btn btn-success">
-                        Add user
+                        Update user
                     </button>
                 </div>
             </div>

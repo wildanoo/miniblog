@@ -11,18 +11,38 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/test', function(){
     return App\User::findOrFail(1)->profile->avatar;
 });
 
+Route::get('/', 'FrontEndController@index')->name('index');
+Route::post('/subscribe', function(){
+    $email = request('email');
+
+    Newsletter::subscribe($email);
+
+    Session::flash('subscribed','Succesfully subscribed.');
+    return redirect()->back();
+});
+
+Route::get('/post/{slug}','FrontEndController@singlePost')->name('post.single');
+Route::get('/category/{id}','FrontEndController@category')->name('category.single');
+Route::get('/tag/{id}','FrontEndController@tag')->name('tag.single');
+Route::get('/results', function(){
+    $posts = \App\Post::where('title','like', '%' . request('query') . '%')->get();
+
+    return view('results')->with('posts',$posts)
+                          ->with('title','Search result : ' . request('query'))
+                          ->with('setting',\App\Setting::first())
+                          ->with('categories', \App\Category::take(5)->get())
+                          ->with('query', request('query'));
+});
+
+
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/dashboard', 'HomeController@index')->name('home');
 
     Route::get('/posts','PostsController@index')->name('posts');
     Route::get('/post/create', 'PostsController@create')->name('post.create');

@@ -63,3 +63,17 @@
     </div>
 </div>
 @endsection
+
+
+@section('styles')
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+@endsection
+
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#content').summernote();
+    });
+</script>
+@endsection

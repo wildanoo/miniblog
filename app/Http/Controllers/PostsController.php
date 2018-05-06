@@ -7,6 +7,7 @@ use App\Category;
 use App\Post;
 use Illuminate\Support\Facades\Session;
 use App\Tag;
+use Auth;
 
 class PostsController extends Controller
 {
@@ -62,7 +63,8 @@ class PostsController extends Controller
             'content' => $request->content,
             'category_id' => $request->category_id,
             'featured' => 'uploads/posts/' . $featured_new_name,
-            'slug' => str_slug($request->title)
+            'slug' => str_slug($request->title),
+            'user_id' => Auth::id()
         ]);
 
         $post->tags()->attach($request->tags);

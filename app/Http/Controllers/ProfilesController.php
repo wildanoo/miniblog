@@ -71,12 +71,20 @@ class ProfilesController extends Controller
      */
     public function update(Request $request)
     {
+        // dd($request->all());
+
         $this->validate($request,[
            'name' => 'required',
            'email' => 'required|email',
            'facebook' => 'required|url',
            'youtube' => 'required|url'
         ]);
+
+        if(!empty($request->password)){
+            $this->validate($request,[
+                'password' => 'required|min:6'
+            ]);
+        }
 
         $user = Auth::user();
 
@@ -92,8 +100,9 @@ class ProfilesController extends Controller
         $user->email = $request->email;
         $user->profile->facebook = $request->facebook;
         $user->profile->youtube = $request->youtube;
-
-        if($request->has('password')){
+        $user->profile->about = $request->about;
+        
+        if($request->has('password') && !empty($request->password) ){
             $user->password = bcrypt($request->password);
         }
 
