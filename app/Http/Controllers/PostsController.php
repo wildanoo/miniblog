@@ -8,6 +8,7 @@ use App\Post;
 use Illuminate\Support\Facades\Session;
 use App\Tag;
 use Auth;
+use File;
 
 class PostsController extends Controller
 {
@@ -162,8 +163,11 @@ class PostsController extends Controller
 
     public function kill($id)
     {
+        
         $post = Post::withTrashed()->where('id',$id)->first();
         $post->forceDelete();
+
+        File::delete($post->featured);
 
         Session::flash('success','Post deleted permanently');
 
